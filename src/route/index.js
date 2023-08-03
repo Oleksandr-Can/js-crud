@@ -86,8 +86,6 @@ let myObject = new Product()
 console.log(myObject.id)
 // ================================================================
 
-// ================================================================
-
 // router.get Створює нам один ентпоїнт
 
 // ↙️ тут вводимо шлях (PATH) до сторінки
@@ -108,15 +106,17 @@ router.get('/product-create', function (req, res) {
 
 // ↙️ тут вводимо шлях (PATH) до сторінки
 router.post('/product-create', function (req, res) {
-  // res.render генерує нам HTML сторінку
+  const { name, price, description } = req.body
 
-  // ↙️ cюди вводимо назву файлу з сontainer
-  res.render('product-create', {
-    // вказуємо назву папки контейнера, в якій знаходяться наші стилі
-    style: 'product-create',
+  const product = new Product(name, price, description)
+
+  Product.add(product)
+
+  res.render('success-info', {
+    style: 'success-info',
+    info: 'Product is created',
   })
-  // ↑↑ сюди вводимо JSON дані
 })
-
+// ================================================================
 // Підключаємо роутер до бек-енду
 module.exports = router
