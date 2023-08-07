@@ -44,15 +44,15 @@ class Product {
     this.description = description
   }
   //Повертає список створених товарів
-  getList = () => {
+  static getList() {
     return this.#list
   }
   //Додає переданий в аргументі товар в список створених товарів в приватному полі #list
-  add = (product) => {
+  static add = (product) => {
     this.#list.push(product)
   }
   //Знаходить товар в списку створених товарів за допомогою ID, яке повинно бути числом, та яке передається як аргумент
-  getById = (id) => {
+  static getById(id) {
     return this.#list.find((product) => product.id === id)
   }
   //Оновлює властивості аргументу data в об’єкт товару, який був знайдений по ID. Можна оновлювати price, name, description
@@ -68,7 +68,7 @@ class Product {
   }
 
   //Видаляє товар по його ID зі списку створених товарів
-  static deleteById = (id) => {
+  static deleteById(id) {
     const index = this.#list.findIndex(
       (product) => product.id === id,
     )
@@ -97,8 +97,8 @@ router.get('/product-create', function (req, res) {
     // вказуємо назву папки контейнера, в якій знаходяться наші стилі
     style: 'product-create',
   })
-  // ↑↑ сюди вводимо JSON дані
 })
+// ↑↑ сюди вводимо JSON дані
 
 // ================================================================
 
@@ -112,11 +112,34 @@ router.post('/product-create', function (req, res) {
 
   Product.add(product)
 
-  res.render('success-info', {
-    style: 'success-info',
-    info: 'Product is created',
+  res.render('alert', {
+    style: 'alert',
+    info: 'Success',
   })
 })
+
 // ================================================================
+
+// router.get Створює нам один ентпоїнт
+
+// ↙️ тут вводимо шлях (PATH) до сторінки
+router.get('/product-list', function (req, res) {
+  // res.render генерує нам HTML сторінку
+  const list = Product.getList()
+  // ↙️ cюди вводимо назву файлу з сontainer
+  res.render('product-list', {
+    // вказуємо назву папки контейнера, в якій знаходяться наші стилі
+    style: 'product-list ',
+    data: {
+      users: {
+        list,
+        isEmpty: list.length === 0,
+      },
+    },
+  })
+  // ↑↑ сюди вводимо JSON дані
+})
+// ================================================================
+
 // Підключаємо роутер до бек-енду
 module.exports = router
