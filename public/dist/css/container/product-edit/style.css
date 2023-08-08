@@ -36,7 +36,7 @@
 }
 .form__field__block {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   width: 100%;
   gap: 20px;
 }
@@ -53,12 +53,31 @@
 .form__discription {
   padding: 8px;
 }
+.form__field-button {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding-top: 8px;
+  width: 100%;
+}
 .form__button {
   border: 1px solid #ddd;
   padding: 8px;
   border-radius: 4px;
   background-color: blue;
   color: #ddd;
+}
+.form__link {
+  width: 100%;
+}
+.form__button-red {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: red;
+  color: #ddd;
+  text-decoration: none;
 }
 
 main {

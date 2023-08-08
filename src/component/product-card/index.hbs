@@ -1,50 +1,27 @@
-
-  <section>
-    <h1 class='title'>Create product</h1>
-    <div class='form'>
-      
-      <h2 class='form__topic'>Product info</h2>
-      <form method='POST' action='/product-create'>
-        <div class='form__content'>
-          <div class="form__field__block">
-            <div class='form__field'>
-              <div>
-                <label for='name' class='form__label'>Product
-                  name:</label>
-              </div>
-              <div>
-                  <input
-                    type='text'
-                    name='name'
-                    class='form__input'
-                  />
+<section>
+  {{#with data.products}}
+    {{#if isEmpty}}
+      <mark> Empty</mark>
+    {{else}}
+      {{#each list}}
+        <div class='form'>
+          <h1 class='form__name'>{{name}}</h1>
+          <h2 class='form__description'>{{description}}</h2>
+          <div class='form__id'>ID: {{id}}</div>
+          <div class='form__line'>
+            <div>${{price}}</div>
+            <div>
+              <div class='form__link'>
+                <a
+                  href='/product-edit?id={{id}}'
+                  class='form__button'
+                >Edit</a>
               </div>
             </div>
-          <div class='form__field'>
-            <label
-              for='price'
-              class='form__label'
-            >Price:</label>
-            <input
-              type='number'
-              name='price'
-              class='form__input'
-            />
           </div>
-          </div>
-          <div class='form__field'>
-            <label
-              for='description'
-              class='form__label'
-            >Description:</label>
-            <textarea
-              type='password'
-              name='description'
-              class='form__input'
-            /></textarea>
-          </div>
-          <button class='form__button'>Create</button>
+
         </div>
-      </form>
-    </div>
-  </section>
+      {{/each}}
+    {{/if}}
+  {{/with}}
+</section>
