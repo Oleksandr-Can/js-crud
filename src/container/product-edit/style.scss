@@ -70,6 +70,7 @@
   &__field-button {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
     gap: s.space(2);
     padding-top: s.space(2);
     width: 100%;
@@ -84,17 +85,21 @@
   }
 
   &__link {
+    display: flex;
     width: 100%;
+    text-align: center;
+    // padding-top: 10px;
+    // position: relative;
   }
 
   &__button-red {
-    width: 100%;
     border: 1px solid s.color('light');
-    padding: s.space(2);
+    padding: s.space(3);
     border-radius: 4px;
     background-color: s.color('alert');
     color: s.color('light');
     text-decoration: none;
+    width: 100%;
   }
 }
 

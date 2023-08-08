@@ -211,8 +211,6 @@ router.post('/product-edit', function (req, res) {
 router.get('/product-delete', function (req, res) {
   // res.render генерує нам HTML сторінку
 
-  // const { name, price, description, id } = req.body
-
   const { id } = req.query
 
   const result = Product.deleteById(Number(id))
