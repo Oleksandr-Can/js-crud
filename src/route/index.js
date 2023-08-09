@@ -133,6 +133,23 @@ class User {
       return false
     }
   }
+
+  static updateById = (id, data) => {
+    const user = this.getById(id)
+
+    if (user) {
+      this.update(user, data)
+      return true
+    } else {
+      return false
+    }
+  }
+
+  static update = (user, { email }) => {
+    if (email) {
+      user.email = email
+    }
+  }
 }
 
 // ================================================================
@@ -226,24 +243,6 @@ router.get('/product-edit', function (req, res) {
 })
 
 // ↑↑ сюди вводимо JSON дані
-
-// надо проверить!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// static updateById = (id, data) => {
-//   const user = this.getById(id)
-
-//   if (user) {
-//     this.update(user, data)
-//     return true
-//   } else {
-//     return false
-//   }
-// }
-
-// static update = (user, { email }) => {
-//   if (email) {
-//     user.email = email
-//   }
-// }
 
 //=======================================================
 
