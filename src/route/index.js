@@ -86,6 +86,12 @@ class Product {
     const index = this.#list.findIndex(
       (product) => product.id === id,
     )
+    if (index !== -1) {
+      this.#list.splice(index, 1)
+      return true
+    } else {
+      return false
+    }
   }
 }
 
