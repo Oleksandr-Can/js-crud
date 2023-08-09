@@ -1,15 +1,29 @@
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  padding-bottom: 16px;
+  margin: 20px;
+  color: blue;
+}
 
 .form {
   display: flex;
   flex-direction: column;
   padding: 16px;
   gap: 32px;
+  margin: 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
-.form__title {
+.form title {
   font-size: 20px;
   font-weight: bold;
   padding-bottom: 4px;
-  border-bottom: 1px solid #ddd;
+}
+.form__topic {
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 4px;
 }
 .form__content {
   display: grid;
@@ -20,18 +34,31 @@
   flex-direction: column;
   gap: 8px;
 }
+.form__field__block {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  gap: 20px;
+}
 .form__label {
   font-size: 14px;
 }
 .form__input {
+  width: 100%;
   font-size: 14px;
   border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 4px;
+}
+.form__discription {
   padding: 8px;
 }
 .form__button {
   border: 1px solid #ddd;
   padding: 8px;
-  border-radius: 20px;
+  border-radius: 4px;
+  background-color: blue;
+  color: #ddd;
 }
 
 main {
@@ -45,6 +72,5 @@ main {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-
 
 /*# sourceMappingURL=style.css.map */
