@@ -8,13 +8,22 @@ const router = express.Router()
 router.get('/', function (req, res) {
   // res.render генерує нам HTML сторінку
 
+  const list = User.getList()
   // ↙️ cюди вводимо назву файлу з сontainer
   res.render('index', {
     // вказуємо назву папки контейнера, в якій знаходяться наші стилі
     style: 'index',
+
+    data: {
+      users: {
+        list,
+        isEmpty: list.length === 0,
+      },
+    },
   })
   // ↑↑ сюди вводимо JSON дані
 })
+
 
 //=================================================================
 class Product {
@@ -77,6 +86,37 @@ class Product {
   static deleteById(id) {
     const index = this.#list.findIndex(
       (product) => product.id === id,
+
+//=======================================================
+
+class User {
+  static #list = []
+
+  constructor(email, login, password) {
+    this.email = email
+    this.login = login
+    this.password = password
+    this.id = new Date().getTime()
+  }
+
+  verifyPassword = (password) => this.password === password
+
+  static add = (user) => {
+    this.#list.push(user)
+  }
+
+  static getList = () => {
+    return this.#list
+  }
+
+  static getById = (id) => {
+    return this.#list.find((user) => user.id === id)
+  }
+
+  static deleteById = (id) => {
+    const index = this.#list.findIndex(
+      (user) => user.id === id,
+
     )
 
     if (index !== -1) {
@@ -86,6 +126,7 @@ class Product {
       return false
     }
   }
+
 }
 
 // ================================================================
@@ -178,11 +219,61 @@ router.get('/product-edit', function (req, res) {
   }
 
   // ↑↑ сюди вводимо JSON дані
+
+
+  static updateById = (id, data) => {
+    const user = this.getById(id)
+
+    if (user) {
+      this.update(user, data)
+      return true
+    } else {
+      return false
+    }
+  }
+
+  static update = (user, { email }) => {
+    if (email) {
+      user.email = email
+    }
+  }
+}
+
+//=======================================================
+
+// ↙️ тут вводимо шлях (PATH) до сторінки
+router.post('/user-create', function (req, res) {
+  const { email, login, password } = req.body
+
+  const user = new User(email, login, password)
+
+  User.add(user)
+
+  res.render('success-info', {
+    style: 'success-info',
+    info: 'User is created',
+  })
 })
 
 //=======================================================
 
 // ↙️ тут вводимо шлях (PATH) до сторінки
+router.get('/user-delete', function (req, res) {
+  const { id } = req.query
+
+  User.deleteById(Number(id))
+
+  res.render('success-info', {
+    style: 'success-info',
+    info: 'User is deleted',
+  })
+
+})
+
+//=======================================================
+
+// ↙️ тут вводимо шлях (PATH) до сторінки
+
 router.post('/product-edit', function (req, res) {
   // Отримати оновлені дані товару з req.body
   const { name, price, description, id } = req.body
@@ -225,6 +316,28 @@ router.get('/product-delete', function (req, res) {
 
   // ↑↑ сюди вводимо JSON дані
 })
+
+router.post('/user-update', function (req, res) {
+  const { email, password, id } = req.body
+
+  let result = false
+
+  const user = User.getById(Number(id))
+
+  if (user.verifyPassword(password)) {
+    User.update(user, { email })
+    result = true
+  }
+
+  res.render('success-info', {
+    style: 'success-info',
+    info: result
+      ? 'Email is updated'
+      : 'Error has occurred',
+  })
+})
+
+
 // ================================================================
 
 // Підключаємо роутер до бек-енду
