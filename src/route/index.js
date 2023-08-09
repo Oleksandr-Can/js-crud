@@ -24,7 +24,6 @@ router.get('/', function (req, res) {
   // ↑↑ сюди вводимо JSON дані
 })
 
-
 //=================================================================
 class Product {
   //Приватне поле, яке містить список створених товарів
@@ -86,6 +85,15 @@ class Product {
   static deleteById(id) {
     const index = this.#list.findIndex(
       (product) => product.id === id,
+    )
+    if (index !== -1) {
+      this.#list.splice(index, 1)
+      return true
+    } else {
+      return false
+    }
+  }
+}
 
 //=======================================================
 
@@ -116,7 +124,6 @@ class User {
   static deleteById = (id) => {
     const index = this.#list.findIndex(
       (user) => user.id === id,
-
     )
 
     if (index !== -1) {
@@ -127,6 +134,22 @@ class User {
     }
   }
 
+  static updateById = (id, data) => {
+    const user = this.getById(id)
+
+    if (user) {
+      this.update(user, data)
+      return true
+    } else {
+      return false
+    }
+  }
+
+  static update = (user, { email }) => {
+    if (email) {
+      user.email = email
+    }
+  }
 }
 
 // ================================================================
@@ -220,25 +243,23 @@ router.get('/product-edit', function (req, res) {
 
   // ↑↑ сюди вводимо JSON дані
 
+  // static updateById = (id, data) => {
+  //   const user = this.getById(id)
 
-  static updateById = (id, data) => {
-    const user = this.getById(id)
+  //   if (user) {
+  //     this.update(user, data)
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // }
 
-    if (user) {
-      this.update(user, data)
-      return true
-    } else {
-      return false
-    }
-  }
-
-  static update = (user, { email }) => {
-    if (email) {
-      user.email = email
-    }
-  }
-}
-
+  // static update = (user, { email }) => {
+  //   if (email) {
+  //     user.email = email
+  //   }
+  // }
+})
 //=======================================================
 
 // ↙️ тут вводимо шлях (PATH) до сторінки
@@ -267,7 +288,6 @@ router.get('/user-delete', function (req, res) {
     style: 'success-info',
     info: 'User is deleted',
   })
-
 })
 
 //=======================================================
@@ -336,7 +356,6 @@ router.post('/user-update', function (req, res) {
       : 'Error has occurred',
   })
 })
-
 
 // ================================================================
 
